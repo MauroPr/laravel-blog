@@ -12,6 +12,14 @@ class Post extends Model
     use HasFactory;
     use Sluggable;
 
+    protected $fillable = [
+        'title',
+        'body',
+        'iframe',
+        'image',
+        'user_id',
+    ];
+
     public function sluggable()
     {
         return [
@@ -28,5 +36,12 @@ class Post extends Model
     public function getGetExcerptAttribute()
     {
         return Str::limit($this->body, 100, '...');
+    }
+
+    public function getGetImageAttribute()
+    {
+        if ($this->image) {
+            return url("Storage/$this->image");
+        }
     }
 }
